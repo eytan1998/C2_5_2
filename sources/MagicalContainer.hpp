@@ -6,12 +6,22 @@
 #include <cmath>
 #include <vector>
 
+
+
 using namespace std;
 namespace ariel{}
 
+class Node{
+public:
+    int value;
+    bool isPrime;
+    explicit Node(int value);
+};
+
 class MagicalContainer {
 private:
-    std::vector<int> elements;
+    vector<Node> elements;
+    vector<int*> pointers;
 
 public:
     MagicalContainer();
@@ -22,13 +32,17 @@ public:
 
     MagicalContainer& operator=(const MagicalContainer& other);
 
-    int operator[](int index);
+    int operator[](size_t index);
 
     void addElement(int element);
 
     void removeElement(int element);
 
     size_t size() const;
+
+    size_t Psize() const;//for prime
+
+    static bool isPrime(int num);
 
 /*
  * =============================================
@@ -120,10 +134,10 @@ public:
         MagicalContainer &container;
         size_t currentIndex;
 
-        bool isPrime(int num);
 
     public:
         explicit PrimeIterator();
+
         explicit PrimeIterator(MagicalContainer& container);
 
         PrimeIterator(const PrimeIterator& other);

@@ -10,10 +10,9 @@ MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &contain
         : container(container), currentIndex(0), isLeft(true) {}
 
 
-MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer::SideCrossIterator &other)
-        : container(other.container), currentIndex(other.currentIndex), isLeft(other.isLeft) {}
+MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer::SideCrossIterator &other) = default;
 
-MagicalContainer::SideCrossIterator::~SideCrossIterator() {}
+MagicalContainer::SideCrossIterator::~SideCrossIterator()= default;
 
 MagicalContainer::SideCrossIterator
 &MagicalContainer::SideCrossIterator::operator=(const MagicalContainer::SideCrossIterator &other) {

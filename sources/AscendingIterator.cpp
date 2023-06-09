@@ -10,10 +10,9 @@ MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &contain
         : container(container), currentIndex(0) {}
 
 
-MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer::AscendingIterator &other)
-        : container(other.container), currentIndex(other.currentIndex) {}
+MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer::AscendingIterator &other) = default;
 
-MagicalContainer::AscendingIterator::~AscendingIterator() {}
+MagicalContainer::AscendingIterator::~AscendingIterator() = default;
 
 MagicalContainer::AscendingIterator
 &MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &other) {
@@ -44,7 +43,7 @@ int MagicalContainer::AscendingIterator::operator*() const {
 
 MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++() {
     if (currentIndex == container.size()) throw runtime_error("cant increment end()");
-    if (currentIndex < container.size()) currentIndex++;
+    currentIndex++;
     return *this;
 }
 
