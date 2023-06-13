@@ -46,7 +46,7 @@ int MagicalContainer::AscendingIterator::operator*() const {
 }
 
 MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++() {
-    if (currentIndex == container.size()) throw runtime_error("cant increment end()");
+    if (currentIndex == container.size()) throw std::runtime_error("cant increment end()");
     currentIndex++;
     return *this;
 }

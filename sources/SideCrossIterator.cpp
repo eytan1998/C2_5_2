@@ -40,13 +40,12 @@ MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() {
 }
 
 int MagicalContainer::SideCrossIterator::operator*() const {
-//    cout<<"*"<<currentIndex<<"="<<container[currentIndex]<<endl;
     return container[currentIndex];
 }
 
 MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
     //if ended
-    if (currentIndex == container.size()) throw runtime_error("cant increment end()");
+    if (currentIndex == container.size()) throw std::runtime_error("cant increment end()");
 
     //if on the last one
     //if odd 5 -> end 2 (middle) 0,4,1,3,2
@@ -111,7 +110,6 @@ void MagicalContainer::SideCrossIterator::update(bool isDelete, bool isPrime, in
             iter = it;
             break;}
     }
-    cout<<*(*this)<< " < "<<*iter<<" = "<<(operator<(iter))<<endl;
     if (isDelete) {
         if(*(*this) > value) {
             currentIndex--;

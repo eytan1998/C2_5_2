@@ -44,7 +44,7 @@ int MagicalContainer::PrimeIterator::operator*() const {
 }
 
 MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator++() {
-    if (currentIndex == container.Psize()) throw runtime_error("cant increment end()");
+    if (currentIndex == container.Psize()) throw std::runtime_error("cant increment end()");
     currentIndex++;
     return *this;
 }
