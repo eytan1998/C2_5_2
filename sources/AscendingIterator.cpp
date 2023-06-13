@@ -70,15 +70,15 @@ bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator &oth
     return currentIndex < other.currentIndex;
 }
 
-void MagicalContainer::AscendingIterator::update(bool isDelete, int index) {
+void MagicalContainer::AscendingIterator::update(bool isDelete,bool isPrime, int value) {
     if(isDelete){
-        if(currentIndex > index) {
-            currentIndex++;
+        if(*(*this) > value) {
+            currentIndex--;
         }
     }else{
         //insert
-        if(currentIndex => index){
-            currentIndex--;
+        if(*(*this) > value){
+            currentIndex++;
         }
     }
 }

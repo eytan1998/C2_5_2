@@ -7,12 +7,14 @@
  */
 
 MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container)
-        : container(container), currentIndex(0), isLeft(true) {}
+        : container(container), currentIndex(0), isLeft(true) {
+    container.addObserver(this);
+}
 
 
 MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer::SideCrossIterator &other) = default;
 
-MagicalContainer::SideCrossIterator::~SideCrossIterator()= default;
+MagicalContainer::SideCrossIterator::~SideCrossIterator() { container.removeObserver(this); }
 
 MagicalContainer::SideCrossIterator
 &MagicalContainer::SideCrossIterator::operator=(const MagicalContainer::SideCrossIterator &other) {
@@ -38,6 +40,7 @@ MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() {
 }
 
 int MagicalContainer::SideCrossIterator::operator*() const {
+//    cout<<"*"<<currentIndex<<"="<<container[currentIndex]<<endl;
     return container[currentIndex];
 }
 
@@ -78,26 +81,48 @@ bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &oth
     if (&container != &other.container)throw std::runtime_error(">. different containers");
 
     //calculate with one is finish
-    if(currentIndex >= container.size() && other.currentIndex < container.size()) return true;
-    if(currentIndex >= container.size() && other.currentIndex >= container.size()) return false;
-    if(currentIndex < container.size() && other.currentIndex >= container.size()) return false;
+    if (currentIndex >= container.size() && other.currentIndex < container.size()) return true;
+    if (currentIndex >= container.size() && other.currentIndex >= container.size()) return false;
+    if (currentIndex < container.size() && other.currentIndex >= container.size()) return false;
 
-    float middle = ((container.size()-1) / 2.0);
+    float middle = ((container.size() - 1) / 2.0);
 
 
     //closest to middle is the smaller
-    int mDis = abs(currentIndex - middle) ;
+    int mDis = abs(currentIndex - middle);
     int oDis = abs(other.currentIndex - middle);
 
-    if(mDis < oDis) return true;
+    if (mDis < oDis) return true;
     //same distance but I am left so came first
-    if(mDis==oDis && (!isLeft && other.isLeft)) return true;
+    if (mDis == oDis && (!isLeft && other.isLeft)) return true;
     //return false if greater distance, or same but he on left or we both on same side
     return false;
 }
 
 bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &other) const {
     //if not > so its <=, but if also != so <
-    return (!(*this > other)&& (*this != other));
+    return (!(*this > other) && (*this != other));
+}
+
+void MagicalContainer::SideCrossIterator::update(bool isDelete, bool isPrime, int value) {
+    SideCrossIterator iter(*this);
+    for (auto it = iter.begin(); it != iter.end(); ++it) {
+        if (*it == value) {
+            iter = it;
+            break;}
+    }
+    cout<<*(*this)<< " < "<<*iter<<" = "<<(operator<(iter))<<endl;
+    if (isDelete) {
+        if(*(*this) > value) {
+            currentIndex--;
+        }
+    } else {
+        //insert
+        if (operator>(iter)) {
+            currentIndex++;
+
+        }
+
+    }
 }
 

@@ -4,11 +4,12 @@
 
 #include <vector>
 #include <algorithm>
+#include <vector>
 
 // Observer class
 class Observer {
 public:
-    virtual void update(bool isDelete, int index) = 0;
+    virtual void update(bool isDelete, bool isPrime, int index) = 0;
 };
 
 class Subject {
@@ -26,9 +27,14 @@ public:
         }
     }
 
-    void notifyObservers(bool isDelete, int index) {
+    void notifyInsert(Node & node) {
         for (Observer *observer: observers) {
-            observer->update(isDelete, index);
+            observer->update(false, node.isPrime,node.value);
+        }
+    }
+    void notifyDelete(Node & node) {
+        for (Observer *observer: observers) {
+            observer->update(true, node.isPrime,node.value);
         }
     }
 

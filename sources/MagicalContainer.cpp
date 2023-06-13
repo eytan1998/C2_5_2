@@ -44,7 +44,7 @@ void MagicalContainer::addElement(int value) {
                                     return node.value < targetValue;
                                 });
     elements.insert(itr, newNode);
-
+    notifyInsert(newNode);
     //update the list of primes, O(n)
     pointers.clear();
     for (Node &node: elements) {
@@ -65,6 +65,7 @@ void MagicalContainer::removeElement(int value) {
     //throw if not exist
     if (it == elements.end()) throw std::runtime_error("removeElement. not an element.");
 
+    notifyDelete(*it);
     elements.erase(it);
     //update the list of primes, O(n)
     pointers.clear();

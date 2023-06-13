@@ -6,12 +6,6 @@
 #include <cmath>
 #include <vector>
 
-#include "obsserver.h"
-
-
-using namespace std;
-namespace ariel{}
-
 class Node{
 public:
     int value;
@@ -19,9 +13,16 @@ public:
     explicit Node(int value);
 };
 
+#include "obsserver.h"
+
+
+using namespace std;
+namespace ariel{}
+
+
+
 class MagicalContainer : public Subject{
 private:
-    vector<Node> elements;
     vector<int*> pointers;
 
 public:
@@ -82,7 +83,7 @@ public:
 
         AscendingIterator end();
 
-        void update(bool isDelete, int index) override;
+        void update(bool isDelete,bool isPrime, int index) override;
 
     };
 
@@ -97,7 +98,6 @@ public:
     private:
         MagicalContainer &container;
         bool isLeft;
-        size_t currentIndex;
 
     public:
         explicit SideCrossIterator();
@@ -126,8 +126,9 @@ public:
 
         SideCrossIterator end();
 
-        void update(bool isDelete, int index) override;
+        void update(bool isDelete,bool isPrime, int index) override;
 
+        size_t currentIndex;
     };
 
 
@@ -139,10 +140,10 @@ public:
     class PrimeIterator : public Observer{
     private:
         MagicalContainer &container;
-        size_t currentIndex;
-
-
     public:
+
+
+        size_t currentIndex;
         explicit PrimeIterator();
 
         explicit PrimeIterator(MagicalContainer& container);
@@ -169,10 +170,11 @@ public:
 
         PrimeIterator end();
 
-        void update(bool isDelete, int index) override;
+        void update(bool isDelete,bool isPrime, int index) override;
     };
 
 
+    vector<Node> elements;
 };
 
 #endif  // MAGICALCONTAINER_H

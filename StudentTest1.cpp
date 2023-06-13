@@ -4,7 +4,87 @@
 
 using namespace ariel;
 using namespace std;
-// Test case for adding elements to the MagicalContainer
+
+//myTests
+TEST_CASE("AscendingIterator add remove") {
+    MagicalContainer container;
+    container.addElement(17);
+    container.addElement(2);
+    container.addElement(25);
+    container.addElement(9);
+    container.addElement(3);
+    //  .
+    //2,3,9,17
+    //1,2,3,9,17
+    MagicalContainer::AscendingIterator it(container);
+    CHECK_EQ(*it,2);
+    container.addElement(200);
+    CHECK_EQ(*it,2);
+    CHECK_EQ(*++it,3);
+    container.addElement(1);
+    CHECK_EQ(*it,3);
+    container.removeElement(200);
+    CHECK_EQ(*it,3);
+    container.removeElement(2);
+    CHECK_EQ(*it,3);
+
+
+}
+TEST_CASE("PrimeIterator add remove") {
+    MagicalContainer container;
+    container.addElement(17);
+    container.addElement(2);
+    container.addElement(25);
+    container.addElement(9);
+    container.addElement(3);
+    //  .
+    //2,3,17
+    //3,17
+    MagicalContainer::PrimeIterator it(container);
+    CHECK_EQ(*it,2);
+    container.addElement(51);
+    CHECK_EQ(*it,2);
+    CHECK_EQ(*++it,3);
+    CHECK_EQ(*++it,17);
+    container.addElement(7);
+    CHECK_EQ(*it,17);
+
+    container.removeElement(51);
+    CHECK_EQ(*it,17);
+    container.removeElement(2);
+    CHECK_EQ(*it,17);
+
+
+
+}
+TEST_CASE("SideCrossIterator add remove") {
+    MagicalContainer container;
+    container.addElement(1);
+    container.addElement(2);
+    container.addElement(3);
+    container.addElement(4);
+    container.addElement(5);
+
+
+    MagicalContainer::SideCrossIterator it(container);
+    CHECK_EQ(*it,1);
+    container.addElement(200);
+    CHECK_EQ(*it,1);
+     CHECK_EQ(*++it,200);
+
+    container.addElement(0);
+    CHECK_EQ(*it,200);
+
+
+
+    container.removeElement(0);
+    CHECK_EQ(*++it,2);
+    container.removeElement(200);
+    CHECK_EQ(*it,2);
+
+
+}
+
 TEST_CASE("Adding elements to MagicalContainer") {
     MagicalContainer container;
 
