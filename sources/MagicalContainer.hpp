@@ -6,6 +6,7 @@
 #include <cmath>
 #include <vector>
 
+#include "obsserver.h"
 
 
 using namespace std;
@@ -18,7 +19,7 @@ public:
     explicit Node(int value);
 };
 
-class MagicalContainer {
+class MagicalContainer : public Subject{
 private:
     vector<Node> elements;
     vector<int*> pointers;
@@ -49,7 +50,7 @@ public:
  *              AscendingIterator
  * =============================================
  */
-    class AscendingIterator {
+    class AscendingIterator : public Observer{
     private:
         MagicalContainer &container;
         size_t currentIndex;
@@ -80,6 +81,9 @@ public:
         AscendingIterator begin();
 
         AscendingIterator end();
+
+        void update(bool isDelete, int index) override;
+
     };
 
 
@@ -89,7 +93,7 @@ public:
  * =============================================
  */
 
-    class SideCrossIterator {
+    class SideCrossIterator :public Observer{
     private:
         MagicalContainer &container;
         bool isLeft;
@@ -121,6 +125,9 @@ public:
         SideCrossIterator begin();
 
         SideCrossIterator end();
+
+        void update(bool isDelete, int index) override;
+
     };
 
 
@@ -129,7 +136,7 @@ public:
  *              PrimeIterator
  * =============================================
  */
-    class PrimeIterator {
+    class PrimeIterator : public Observer{
     private:
         MagicalContainer &container;
         size_t currentIndex;
@@ -161,6 +168,8 @@ public:
         PrimeIterator begin();
 
         PrimeIterator end();
+
+        void update(bool isDelete, int index) override;
     };
 
 

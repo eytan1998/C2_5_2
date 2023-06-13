@@ -7,12 +7,16 @@
  * =============================================
  */
 MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container)
-        : container(container), currentIndex(0) {}
+        : container(container), currentIndex(0) {
+    container.addObserver(this);
+}
 
 
 MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer::AscendingIterator &other) = default;
 
-MagicalContainer::AscendingIterator::~AscendingIterator() = default;
+MagicalContainer::AscendingIterator::~AscendingIterator() {
+    container.removeObserver(this);
+}
 
 MagicalContainer::AscendingIterator
 &MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &other) {
@@ -64,4 +68,17 @@ bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator &oth
 bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator &other) const {
     if (&container != &other.container)throw std::runtime_error("<. different containers");
     return currentIndex < other.currentIndex;
+}
+
+void MagicalContainer::AscendingIterator::update(bool isDelete, int index) {
+    if(isDelete){
+        if(currentIndex > index) {
+            currentIndex++;
+        }
+    }else{
+        //insert
+        if(currentIndex => index){
+            currentIndex--;
+        }
+    }
 }
